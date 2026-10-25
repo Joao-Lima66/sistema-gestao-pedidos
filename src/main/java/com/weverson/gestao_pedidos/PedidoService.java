@@ -1,8 +1,9 @@
 package com.weverson.gestao_pedidos;
 
-import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.stereotype.Service;
 
 @Service
 public class PedidoService {
@@ -13,12 +14,12 @@ public class PedidoService {
         this.pedidoRepository = pedidoRepository;
     }
 
-    public List<Pedido> listarTodos() {
-        return pedidoRepository.findAll();
-    }
-
     public Pedido criar(Pedido pedido) {
         return pedidoRepository.save(pedido);
+    }
+
+    public List<Pedido> listarTodos() {
+        return pedidoRepository.findAll();
     }
 
     public Optional<Pedido> buscarPorId(Long id) {
@@ -33,17 +34,11 @@ public class PedidoService {
         return false;
     }
 
-    // Trocamos o .map() pelo if/else tradicional para evitar o erro de Cast
-    public Optional<Pedido> atualizar(Long id, Pedido dadosAtualizados) {
-        Optional<Pedido> pedidoExistente = pedidoRepository.findById(id);
-        
-        if (pedidoExistente.isPresent()) {
-            Pedido pedido = pedidoExistente.get();
-            pedido.setCliente(dadosAtualizados.getCliente());
-            pedido.setValorTotal(dadosAtualizados.getValorTotal());
-            return Optional.of(pedidoRepository.save(pedido));
-        }
-        
-        return Optional.empty();
+    public Optional<Pedido> atualizar(Long id, Pedido dadosNovos) {
+        return pedidoRepository.findById(id).map(pedidoExistente -> {
+            pedidoExistente.setCliente(dadosNovos.getCliente());
+            pedidoExistente.setValorTotal(dadosNovos.getValorTotal());
+            return pedidoRepository.save(pedidoExistente);
+        });
     }
 }

@@ -4,11 +4,10 @@ import java.time.LocalDateTime;
 import java.util.Map;
 
 public class ErroResposta {
-
     private LocalDateTime timestamp;
     private int status;
     private String mensagem;
-    private Map<String, String> erros; // Guarda o campo -> mensagem de erro (ex: "cliente": "Não pode ser vazio")
+    private Map<String, String> erros;
 
     public ErroResposta(int status, String mensagem, Map<String, String> erros) {
         this.timestamp = LocalDateTime.now();
@@ -17,20 +16,8 @@ public class ErroResposta {
         this.erros = erros;
     }
 
-    // Getters
-    public LocalDateTime getTimestamp() {
-        return timestamp;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public String getMensagem() {
-        return mensagem;
-    }
-
-    public Map<String, String> getErros() {
-        return erros;
-    }
+    public LocalDateTime getTimestamp() { return timestamp; }
+    public int getStatus() { return status; }
+    public String getMensagem() { return mensagem; }
+    public Map<String, String> getErros() { return erros; }
 }

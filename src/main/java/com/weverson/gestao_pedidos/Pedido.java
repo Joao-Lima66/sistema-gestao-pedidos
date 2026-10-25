@@ -1,5 +1,7 @@
 package com.weverson.gestao_pedidos;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,42 +18,43 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "O nome do cliente é obrigatório")
+    @NotBlank(message = "O nome do cliente e obrigatorio")
     private String cliente;
 
     @Positive(message = "O valor total deve ser maior que zero")
-    private Double valorTotal;
+    private BigDecimal valorTotal;
 
-    public Pedido() {
+    public Pedido() {}
+
+    public Pedido(String cliente, BigDecimal valorTotal) {
+        this.cliente = cliente;
+        this.valorTotal = valorTotal;
     }
 
-    public Pedido(Long id, String cliente, Double valorTotal) {
+    // Construtores adicionais para suporte aos testes e utilitários
+    public Pedido(Long id, String cliente, BigDecimal valorTotal) {
         this.id = id;
         this.cliente = cliente;
         this.valorTotal = valorTotal;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
+    public Pedido(Long id, String cliente, double valorTotal) {
         this.id = id;
-    }
-
-    public String getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(String cliente) {
         this.cliente = cliente;
+        this.valorTotal = BigDecimal.valueOf(valorTotal);
     }
 
-    public Double getValorTotal() {
-        return valorTotal;
+    public Pedido(String cliente, double valorTotal) {
+        this.cliente = cliente;
+        this.valorTotal = BigDecimal.valueOf(valorTotal);
     }
 
-    public void setValorTotal(Double valorTotal) {
-        this.valorTotal = valorTotal;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getCliente() { return cliente; }
+    public void setCliente(String cliente) { this.cliente = cliente; }
+
+    public BigDecimal getValorTotal() { return valorTotal; }
+    public void setValorTotal(BigDecimal valorTotal) { this.valorTotal = valorTotal; }
 }
